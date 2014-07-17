@@ -1,0 +1,39 @@
+
+
+<%= form_for @list, url: '/lists',
+    html: { class: 'form-horizontal', role: 'form' } do |f| %>
+  <div class='form-group'>
+    <%= f.label :name %>
+    <%= f.text_field :name, placeholder: 'Name this wishlist', class: 'form-control' %>
+  </div>
+  <div class='form-group'>
+    <%= f.submit class: 'btn btn-default btn-block' %>
+  </div>
+<% end %>
+
+<script type='text/javascript'>
+  $(document).ready(function() {
+    $("#new_user").validate({
+      rules:{
+        "user[email]": {
+          required: true,
+          email: true
+        },
+        "user[birthday]": "required",
+        "user[username]": {
+          required: true,
+          minlength: 3
+        },
+        "user[password]": {
+          required: true,
+          minlength: 8
+        },
+        "user[password_confirmation]": {
+          required: true,
+          equalTo: "#user_password"
+        },
+        errorClass: "help-inline"
+      }
+    })
+  })
+</script>

@@ -30,7 +30,7 @@ gem 'mongoid', '~> 4.0.0.rc1', github: 'mongoid/mongoid'
 gem 'mongoid-paperclip', require: 'mongoid_paperclip'
 
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.7'
 
 # Use unicorn as the app server
 # gem 'unicorn'

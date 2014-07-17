@@ -12,6 +12,15 @@ Rails.application.routes.draw do
   post '/signin' => 'sessions#create'
   get '/signout' => 'sessions#destroy'
 
-  
+  get '/lists/new' => 'lists#new'
+  get '/lists' => 'lists#index'
+  post '/lists' => 'lists#create'
+  get '/lists/:id' => 'lists#show'
+  get '/lists/:id/edit' => 'lists#edit'
+  put '/lists/:id' => 'lists#update'
+
+  post '/lists/:id/items' => 'lists#add_item'
+
+  post '/lists/:id/responses' => 'lists#add_response'
 
 end

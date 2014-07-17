@@ -1,6 +1,6 @@
 class User
   include Mongoid::Document
-  include ActiveModel::HasSecurePassword
+  include ActiveModel::SecurePassword
 
   field :email, type: String
   field :password_digest, type: String
@@ -8,8 +8,9 @@ class User
   field :gender, type: Symbol
   field :birthday, type: DateTime
 
-  has_many :wishlists
-  has_many :responses
+  has_many :lists
+
+  has_secure_password
 
   def age
     (DateTime.now - @birthday).years
