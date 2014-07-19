@@ -47,7 +47,7 @@
 <h4>Total Score: <%= @list.total_score %></h4>
 
 <% @list.ranked_items.each do |ri| %>
-  <% norm_rank = 100 * ri.rank / @list.max_score %>
+  <% norm_rank = @list.max_score == 0 ? 0 : 100 * ri.rank / @list.max_score %>
   <p><%= "#{ri.rank}: #{ri.item.title}" %></p>
 <div class="progress">
 <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"
