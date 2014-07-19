@@ -29,6 +29,15 @@ class ListsController < ApplicationController
     redirect_to "/lists/#{list.id}"
   end
 
+  def destroy_item
+    list = List.find(params[:list_id])
+    if @current_user = list.owner
+      item = Item.find(params[:id])
+      item.delete
+    end
+    redirect_to "/lists/#{list.id}"
+  end
+
   def add_response
     list = List.find(params[:id])
     response = list.responses.where({user: @current_user}).first
@@ -47,6 +56,18 @@ class ListsController < ApplicationController
   end
 
   def update
+  end
+
+  def destroy
+    list = List.find(params[:id])
+    if @current_user == list.owner
+      ranked_items = list.responses.inject(Array.new) {|items, r| items.concat r.ranked_items}
+      ranked_items.map { |ri| ri.delete }
+      list.items.map { |i| i.delete }
+      list.responses.map { |r| r.delete }
+      list.delete
+    end
+    redirect_to "/"
   end
 
   private

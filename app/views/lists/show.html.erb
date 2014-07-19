@@ -1,5 +1,10 @@
 <div class='col-md-6 col-xs-10'>
-<h1><%= @list.name %></h1>
+<h1>
+  <%= @list.name %>
+  <% if @list.owner == @current_user %>
+    <a href=<%= "/lists/#{@list.id}/destroy" %>>[x]</a>
+  <% end %>
+</h1>
 <h4>created by <%= @list.owner.username %></h4>
 
 <% if @current_user %>
@@ -8,7 +13,12 @@
       html: { class: 'form-horizontal', role: 'form' } do |f| %>
     <% @response.ranked_items.sort_by(&:rank).reverse.each do |ranked_item| %>
     <div class='form-group'>
-      <label><%= ranked_item.item.title %></label>
+      <label>
+        <%= ranked_item.item.title %>
+        <% if @list.owner == @current_user %>
+          <a href=<%= "/lists/#{@list.id}/items/#{ranked_item.item.id}/destroy" %>>[x]</a>
+        <% end %>
+      </label>
       <input type='range' min='0' max='10' step='0.5' name='<%= ranked_item.item.id %>' value='<%= ranked_item.rank %>' />
     </div>
     <% end %>

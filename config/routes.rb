@@ -17,8 +17,10 @@ Rails.application.routes.draw do
   get '/lists/:id' => 'lists#show'
   get '/lists/:id/edit' => 'lists#edit'
   put '/lists/:id' => 'lists#update'
+  get '/lists/:id/destroy' => 'lists#destroy'
 
   post '/lists/:id/items' => 'lists#add_item'
+  get '/lists/:list_id/items/:id/destroy' => 'lists#destroy_item'
 
   post '/lists/:id/responses' => 'lists#add_response'
   patch '/lists/:id/responses' => 'lists#add_response'
