@@ -1,1 +1,7 @@
-<h1>Wishlist</h1>
+<h1>Wishlists</h1>
+
+<ul>
+<% @lists.each do |list| %>
+  <li><a href="/lists/<%= list.id %>"><%= list.name %></a> by <%= list.owner.username %></li>
+<% end %>
+</ul>

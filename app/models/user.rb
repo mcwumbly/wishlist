@@ -9,6 +9,7 @@ class User
   field :birthday, type: DateTime
 
   has_many :lists
+  has_many :responses
 
   has_secure_password
 

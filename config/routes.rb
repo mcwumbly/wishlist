@@ -13,7 +13,6 @@ Rails.application.routes.draw do
   get '/signout' => 'sessions#destroy'
 
   get '/lists/new' => 'lists#new'
-  get '/lists' => 'lists#index'
   post '/lists' => 'lists#create'
   get '/lists/:id' => 'lists#show'
   get '/lists/:id/edit' => 'lists#edit'

@@ -3,6 +3,7 @@ class Item
 
   field :title, type: String
 
-  embedded_in :list
+  belongs_to :list
+  has_many :ranked_items
 
 end

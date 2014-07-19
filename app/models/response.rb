@@ -1,8 +1,23 @@
 class Response
   include Mongoid::Document
 
-  embeds_many :ranked_items
+  has_many :ranked_items
   belongs_to :user
-  embedded_in :list
+  belongs_to :list
+
+  def initialize options={}
+    super
+    self.list.items.each do |item|
+      puts '###########'
+      puts item.inspect
+      ri = self.ranked_items.where({item: item}).first
+      if ri == nil
+        ri = RankedItem.new
+        ri.item = item
+        ri.rank = 5
+        self.ranked_items << ri
+      end
+    end
+  end
 
 end

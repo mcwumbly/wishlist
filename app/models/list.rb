@@ -3,7 +3,8 @@ class List
 
   field :name, type: String
   belongs_to :owner, class_name: 'User', inverse_of: :lists
-  embeds_many :items
-  embeds_many :responses
+  has_many :items
+  has_many :responses
+  has_many :ranked_items
 
 end

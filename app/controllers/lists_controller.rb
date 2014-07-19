@@ -1,9 +1,5 @@
 class ListsController < ApplicationController
 
-  def index
-    @lists = List.all
-  end
-
   def new
     @list = List.new
   end
@@ -18,6 +14,10 @@ class ListsController < ApplicationController
 
   def show
     @list = List.find(params[:id])
+    @response = @list.responses.where({user: @current_user}).first
+    if @response == nil
+      @response = Response.new({list: @list, user: @current_user})
+    end
   end
 
   def add_item
@@ -34,10 +34,11 @@ class ListsController < ApplicationController
     if response == nil
       response = Response.new({list: list, user: @current_user})
     end
-    response.ranked_items.delete_all
     list.items.each do |item|
-      add_or_update_ranked_item(response, item.id, params[item.id.to_s.to_sym])
+      rank = params[item.id.to_s.to_sym]
+      add_or_update_ranked_item(response, item, rank)
     end
+    response.save
     redirect_to "/lists/#{list.id}"
   end
 
@@ -49,10 +50,10 @@ class ListsController < ApplicationController
 
   private
 
-  def add_or_update_ranked_item(response, item_id, rank)
-    ranked_item = response.ranked_items.where({item_id: item_id}).first
+  def add_or_update_ranked_item(response, item, rank)
+    ranked_item = response.ranked_items.where({item: item}).first
     if ranked_item == nil
-      ranked_item = RankedItem.new({ response: response, item_id: item_id })
+      ranked_item = RankedItem.new({ response: response, item: item })
     end
     ranked_item.rank = rank
     ranked_item.save

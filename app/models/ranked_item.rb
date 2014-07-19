@@ -2,8 +2,9 @@ class RankedItem
   include Mongoid::Document
 
   field :rank, type: Integer
-  field :item_id, type: String
 
-  embedded_in :response
+  belongs_to :response
+  belongs_to :item
+  belongs_to :list
 
 end
