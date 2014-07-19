@@ -21,5 +21,6 @@ Rails.application.routes.draw do
   post '/lists/:id/items' => 'lists#add_item'
 
   post '/lists/:id/responses' => 'lists#add_response'
+  patch '/lists/:id/responses' => 'lists#add_response'
 
 end

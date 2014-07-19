@@ -18,6 +18,7 @@ class ListsController < ApplicationController
     if @response == nil
       @response = Response.new({list: @list, user: @current_user})
     end
+    @response.backfill
   end
 
   def add_item

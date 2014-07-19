@@ -1,24 +1,12 @@
+<div class='col-md-6 col-xs-10'>
 <h1><%= @list.name %></h1>
 <h4>created by <%= @list.owner.username %></h4>
-
-<% if @list.owner == @current_user %>
-  <%= form_for Item.new, url: "/lists/#{@list.id}/items",
-      html: { class: 'form-horizontal', role: 'form' } do |f| %>
-    <div class='form-group'>
-      <%= f.label :title %>
-      <%= f.text_field :title, placeholder: 'Item title', class: 'form-control' %>
-    </div>
-    <div class='form-group'>
-      <%= f.submit class: 'btn btn-default btn-block' %>
-    </div>
-  <% end %>
-<% end %>
 
 <% if @current_user %>
   <h4>List Items</h4>
   <%= form_for @response, url: "/lists/#{@list.id}/responses",
       html: { class: 'form-horizontal', role: 'form' } do |f| %>
-    <% @response.ranked_items.each do |ranked_item| %>
+    <% @response.ranked_items.sort_by(&:rank).reverse.each do |ranked_item| %>
     <div class='form-group'>
       <label><%= ranked_item.item.title %></label>
       <input type='range' min='0' max='10' step='0.5' name='<%= ranked_item.item.id %>' value='<%= ranked_item.rank %>' />
@@ -37,3 +25,34 @@
   </ul>
   <a href='/signin'>Sign in</a> or <a href='/register'>register</a> to rate them
 <% end %>
+
+<% if @list.owner == @current_user %>
+  <%= form_for Item.new, url: "/lists/#{@list.id}/items",
+      html: { class: 'form-horizontal', role: 'form' } do |f| %>
+    <div class='form-group'>
+      <%= f.label :title %>
+      <%= f.text_field :title, placeholder: 'Item title', class: 'form-control' %>
+    </div>
+    <div class='form-group'>
+      <%= f.submit class: 'btn btn-default btn-block' %>
+    </div>
+  <% end %>
+<% end %>
+
+</div>
+
+<div class='col-md-6 col-xs-10'>
+<h1>Responses</h1>
+<h4>Users: <%= @list.responses.count %></h4>
+<h4>Total Score: <%= @list.total_score %></h4>
+
+<% @list.ranked_items.each do |ri| %>
+  <% norm_rank = 100 * ri.rank / @list.max_score %>
+  <p><%= "#{ri.rank}: #{ri.item.title}" %></p>
+<div class="progress">
+<div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+  aria-valuenow="<%= norm_rank %>" style="width: <%= norm_rank %>%;">
+</div>
+</div>
+<% end %>
+</div>

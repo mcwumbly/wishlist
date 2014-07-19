@@ -5,6 +5,5 @@ class RankedItem
 
   belongs_to :response
   belongs_to :item
-  belongs_to :list
 
 end
